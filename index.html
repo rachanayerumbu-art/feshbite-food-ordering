@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreshBite - Multi-Restaurant Food Delivery</title>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- External CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Backdrop Overlay -->
+    <div class="overlay" id="overlay" onclick="closeAllModals()"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="#home" class="logo">🍕 FreshBite</a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#home" onclick="toggleMenu()">Home</a></li>
+            <li><a href="#restaurants" onclick="toggleMenu()">Restaurants</a></li>
+            <li><a href="#menu" onclick="toggleMenu()">Menu</a></li>
+            <li><a href="#about" onclick="toggleMenu()">About Us</a></li>
+            <li><a href="#contact" onclick="toggleMenu()">Contact Us</a></li>
+            <li><a href="#" onclick="openModal('loginModal'); toggleMenu();">Login</a></li>
+        </ul>
+        <div class="nav-actions">
+            <!-- Wishlist Button -->
+            <button class="wishlist-icon-btn" onclick="toggleWishlistSidebar()">
+                <i class="fas fa-heart"></i>
+                <span class="badge" id="wishlistCount">0</span>
+            </button>
+            <!-- Cart Button -->
+            <button class="cart-icon-btn" onclick="toggleCart()">
+                <i class="fas fa-shopping-bag"></i> Cart
+                <span class="cart-badge" id="cartCount">0</span>
+            </button>
+            <div class="hamburger" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <h1>Delicious Food, Delivered Fast,Serve Fresh</h1>
+        <p>Order fresh meals from top local restaurants. Apply promo code <strong>SAVE20</strong> at checkout for 20% off!</p>
+        <a href="#restaurants" class="btn-primary">Browse Restaurants</a>
+    </section>
+
+    <!-- Special Offers Banner -->
+    <section class="offers-banner" id="offers">
+        <div class="offer-card">
+            <i class="fas fa-tag"></i>
+            <div>
+                <h4>FLAT 20% OFF</h4>
+                <p>Use code <strong>SAVE20</strong> on orders above ₹300</p>
+            </div>
+        </div>
+        <div class="offer-card">
+            <i class="fas fa-percent"></i>
+            <div>
+                <h4>₹100 INSTANT DISCOUNT</h4>
+                <p>Use code <strong>FRESHBITE100</strong> on your first order</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Restaurants Selector Section -->
+    <section class="container" id="restaurants">
+        <h2 class="section-title">Select a Restaurant</h2>
+        <div class="restaurant-grid" id="restaurantGrid"></div>
+    </section>
+
+    <!-- Menu Section -->
+    <main class="container" id="menu">
+        <div class="menu-header">
+            <h2 class="section-title" id="menuSectionTitle">All Menu Items</h2>
+            <button class="btn-secondary" id="clearRestFilter" onclick="filterByRestaurant('all')" style="display:none;">
+                <i class="fas fa-times"></i> Show All Restaurants
+            </button>
+        </div>
+
+        <!-- Filters (Category & Dietary) -->
+        <div class="filters-wrapper" id="categoryFilters">
+            <button class="filter-btn active" onclick="filterCategory('all', this)">All Types</button>
+            <button class="filter-btn" onclick="filterCategory('Pizza', this)">Pizza</button>
+            <button class="filter-btn" onclick="filterCategory('Burgers', this)">Burgers</button>
+            <button class="filter-btn" onclick="filterCategory('Indian', this)">Indian</button>
+            <button class="filter-btn" onclick="filterCategory('veg', this)">Veg 🌱</button>
+            <button class="filter-btn" onclick="filterCategory('non-veg', this)">Non-Veg 🍗</button>
+            <button class="filter-btn" onclick="filterCategory('vegan', this)">Vegan 🌿</button>
+        </div>
+
+        <!-- Food Cards Grid -->
+        <div class="menu-grid" id="menuGrid"></div>
+    </main>
+
+    <!-- ABOUT US SECTION -->
+    <section class="container" id="about">
+        <h2 class="section-title">About FreshBite</h2>
+        
+        <div class="about-story-box">
+            <h3><i class="fas fa-book-open"></i> Our Story</h3>
+            <p>Founded with a simple mission in mind, FreshBite connects food lovers with the best local kitchens in real time. We believe ordering food should be seamless, fast, and delightful—bridging culinary craft directly to your doorstep with zero compromise on quality.</p>
+        </div>
+
+        <h3 class="subsection-title">Meet Our Leadership Team</h3>
+        <div class="team-grid">
+            <div class="team-card">
+                <div class="team-avatar"><i class="fas fa-user-tie"></i></div>
+                <h4>Vikram Sharma</h4>
+                <p class="role">Founder & CEO</p>
+                <p class="bio">Passionate about foodtech innovation and scaling seamless delivery networks.</p>
+            </div>
+            <div class="team-card">
+                <div class="team-avatar"><i class="fas fa-utensils"></i></div>
+                <h4>Chef Ananya Roy</h4>
+                <p class="role">Culinary Director</p>
+                <p class="bio">12+ years of fine dining expertise, overseeing restaurant curation and standards.</p>
+            </div>
+            <div class="team-card">
+                <div class="team-avatar"><i class="fas fa-cogs"></i></div>
+                <h4>Rohan Mehta</h4>
+                <p class="role">Head of Operations</p>
+                <p class="bio">Ensuring ultra-fast delivery routes and top-tier customer satisfaction.</p>
+            </div>
+        </div>
+
+        <h3 class="subsection-title">Awards & Recognition</h3>
+        <div class="awards-grid">
+            <div class="award-card">
+                <i class="fas fa-trophy award-icon"></i>
+                <h4>Best Food Tech App 2024</h4>
+                <p>National Culinary & Digital Commerce Awards</p>
+            </div>
+            <div class="award-card">
+                <i class="fas fa-award award-icon"></i>
+                <h4>Fastest Delivery Network</h4>
+                <p>Excellence in Logistics Summit 2025</p>
+            </div>
+            <div class="award-card">
+                <i class="fas fa-star award-icon"></i>
+                <h4>Customer Choice Award</h4>
+                <p>Voted #1 Multi-Restaurant Aggregator</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT US SECTION -->
+    <section class="container" id="contact">
+        <h2 class="section-title">Contact Us</h2>
+        <div class="contact-wrapper">
+            <div class="contact-info">
+                <h3>Get In Touch</h3>
+                <div class="info-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div>
+                        <strong>Address</strong>
+                        <p>123 Culinary Boulevard, Foodie Plaza, Tech District</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-clock"></i>
+                    <div>
+                        <strong>Operating Hours</strong>
+                        <p>Monday - Sunday: 10:00 AM - 11:30 PM</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-phone-alt"></i>
+                    <div>
+                        <strong>Phone & Support</strong>
+                        <p>+91 (800) 123-4567 / support@freshbite.com</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-form-container">
+                <h3>Send Us a Message</h3>
+                <form onsubmit="handleContactSubmit(event)">
+                    <div class="form-group">
+                        <label>Your Name</label>
+                        <input type="text" required placeholder="Enter full name">
+                    </div>
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" required placeholder="name@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Subject</label>
+                        <input type="text" required placeholder="General inquiry, Feedback, Partner Request">
+                    </div>
+                    <div class="form-group">
+                        <label>Message</label>
+                        <textarea rows="4" required placeholder="Write your message here..."></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary btn-full">Submit Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sliding Cart Sidebar -->
+    <div class="sidebar" id="cartSidebar">
+        <div class="sidebar-header">
+            <h3>Your Shopping Cart</h3>
+            <button class="close-btn" onclick="toggleCart()">&times;</button>
+        </div>
+        <div class="cart-items-list" id="cartItemsList"></div>
+
+        <div class="coupon-container">
+            <input type="text" id="couponInput" placeholder="Enter Promo (SAVE20 / FRESHBITE100)">
+            <button onclick="applyCoupon()">Apply</button>
+        </div>
+        <p id="couponMessage" class="coupon-msg"></p>
+
+        <div class="cart-footer">
+            <div class="summary-line">
+                <span>Subtotal:</span>
+                <span id="cartSubtotal">₹0</span>
+            </div>
+            <div class="summary-line discount-text">
+                <span>Discount:</span>
+                <span id="cartDiscount">-₹0</span>
+            </div>
+            <div class="cart-total">
+                <span>Final Total:</span>
+                <span id="cartTotal">₹0</span>
+            </div>
+            <button class="btn-primary btn-full" onclick="openCheckout()">Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <!-- Sliding Wishlist Sidebar -->
+    <div class="sidebar" id="wishlistSidebar">
+        <div class="sidebar-header">
+            <h3>Your Wishlist <i class="fas fa-heart" style="color: #ff4757;"></i></h3>
+            <button class="close-btn" onclick="toggleWishlistSidebar()">&times;</button>
+        </div>
+        <div class="cart-items-list" id="wishlistItemsList"></div>
+    </div>
+
+    <!-- Modal: Dish Details -->
+    <div class="modal" id="detailsModal">
+        <div class="modal-header">
+            <h3 id="modalTitle">Dish Overview</h3>
+            <button class="close-btn" onclick="closeModal('detailsModal')">&times;</button>
+        </div>
+        <div id="modalBody"></div>
+    </div>
+
+    <!-- Modal: Checkout -->
+    <div class="modal" id="checkoutModal">
+        <div class="modal-header">
+            <h3>Checkout & Delivery Details</h3>
+            <button class="close-btn" onclick="closeModal('checkoutModal')">&times;</button>
+        </div>
+        <form onsubmit="processOrder(event)">
+            <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" required placeholder="Enter your full name">
+            </div>
+            <div class="form-group">
+                <label>Mobile Number</label>
+                <input type="tel" required placeholder="10-digit mobile number">
+            </div>
+            <div class="form-group">
+                <label>Delivery Address</label>
+                <textarea required rows="2" placeholder="House/Flat No., Street, Area..."></textarea>
+            </div>
+            <div class="form-group">
+                <label>Delivery Slot</label>
+                <select id="deliveryTimeSelect" required>
+                    <option value="ASAP (25-30 Mins)">ASAP (25-30 Mins)</option>
+                    <option value="Today: 7:00 PM - 7:30 PM">Today: 7:00 PM - 7:30 PM</option>
+                    <option value="Today: 8:00 PM - 8:30 PM">Today: 8:00 PM - 8:30 PM</option>
+                    <option value="Tomorrow: 12:30 PM - 1:00 PM">Tomorrow: 12:30 PM - 1:00 PM</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Payment Mode</label>
+                <select id="paymentMethod" required>
+                    <option value="cod">Cash / Pay on Delivery</option>
+                    <option value="upi_app">UPI Apps (GPay, PhonePe, Paytm)</option>
+                    <option value="netbanking">Net Banking</option>
+                </select>
+            </div>
+            <button type="submit" class="btn-primary btn-full" style="margin-top: 15px;">Place Order</button>
+        </form>
+    </div>
+
+    <!-- Modal: Live Order Tracker -->
+    <div class="modal" id="statusModal">
+        <div class="modal-header">
+            <h3>Live Order Tracking</h3>
+            <button class="close-btn" onclick="closeModal('statusModal')">&times;</button>
+        </div>
+        <div class="order-info-badge">
+            Estimated Delivery: <strong id="trackerDeliveryTime">ASAP</strong>
+        </div>
+        <div class="tracker-container">
+            <div class="tracker-step completed" id="step1">
+                <div class="step-icon"><i class="fas fa-check"></i></div>
+                <div><strong>Order Received</strong><br><small>Restaurant accepted your order.</small></div>
+            </div>
+            <div class="tracker-step active" id="step2">
+                <div class="step-icon"><i class="fas fa-utensils"></i></div>
+                <div><strong>Preparing Meal</strong><br><small>Kitchen is preparing fresh ingredients.</small></div>
+            </div>
+            <div class="tracker-step" id="step3">
+                <div class="step-icon"><i class="fas fa-motorcycle"></i></div>
+                <div><strong>Out for Delivery</strong><br><small>Rider is on the way.</small></div>
+            </div>
+            <div class="tracker-step" id="step4">
+                <div class="step-icon"><i class="fas fa-home"></i></div>
+                <div><strong>Delivered</strong><br><small>Enjoy your meal!</small></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Login -->
+    <div class="modal" id="loginModal">
+        <div class="modal-header">
+            <h3>User Login</h3>
+            <button class="close-btn" onclick="closeModal('loginModal')">&times;</button>
+        </div>
+        <form onsubmit="simulatedLogin(event)">
+            <div class="form-group">
+                <label>Email Address</label>
+                <input type="email" required placeholder="user@example.com">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" required placeholder="••••••••">
+            </div>
+            <button type="submit" class="btn-primary btn-full">Login</button>
+        </form>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 FreshBite | Multi-Restaurant Online Ordering</p>
+    </footer>
+
+    <!-- External JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
